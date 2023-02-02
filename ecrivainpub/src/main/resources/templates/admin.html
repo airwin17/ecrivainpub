@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>écrivain public</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    
+    
+  	
+</head>
+<body>
+	
+	<div id="contenu">
+	<div id="barre">
+		<div th:each="categorie: ${categ}" class="elem" th:text="${categorie.catname}" onclick="hundlercat(this)" ></div>
+		<div class="plus-div" onclick="adcat(this)" >
+			<i class="fa-solid fa-plus" id="plus" ></i>
+		</div>
+		<div class="edit-div" onclick="editcat(this)"><i class="fa fa-pencil" aria-hidden="true" id="edit"></i></div>
+	</div>
+	<div id="espace" ></div>
+	<div id="tools-barre" style="display:none;">
+		<button id="add-service-but" th:onclick="addservice()">
+			<i class="fa-solid fa-plus" id="plus-service" ></i>
+		</button>
+		<hr id="horiz-line">
+	</div>
+	
+	<div id="result-show" style="display:none;">
+		
+	</div>
+	
+	<div id="bienvenue"><h1>Votre plateforme de conseils administratifs et aide aux dossiers divers !<br>
+
+<span >Nous facilitons les tâches bureautiques diverses : traduction, saisies de documents, reconstruction de dossiers et inscription internet multiples…..<br>
+
+Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
+	<div id="bs-div" style="display:none;">
+		<div id="edit-service-div" class="service-div" style="display:none;">
+			<form id="editserform" method="get">
+				<input type="text" name="idser" id="edit-idser-txtfield">
+				<input type="text" name="descser" id="edit-serdesc-txt-field" placeholder="Nom du service">
+				<input type="text" name="prixser" id="edit-serprix-txt-field" placeholder="Prix du service">
+				<input type="file" name="img" id="add-img-file" accept="image/png, image/jpeg">
+				<div id="edit-ser-div">
+					<input type="checkbox" name="action" id="edit-checkbox" value="Modifier" th:onclick= "sercheck(this)" checked>
+					<label for="edit-ser-checkbox"  id="edit-ser-label">Modifier</label>
+				</div>
+				<div id="remove-ser-div">
+					<input type="checkbox" name="action" id="remove-checkbox" value="Supprimer" th:onclick= "sercheck(this)">
+					<label for="remove-checkbox"  id="remove-label">Supprimer</label>
+				</div>
+					<input type="submit" id="edit-ser-submit">
+					<input type="button" id="annuler-but" th:onclick="annulerr()" value="Annuler">
+			</form>
+		</div>
+		<div id="service-add-div" class="service-div" style="display:none">
+		
+			<form action="/admin/addservice" id="addserform" method="get" th:object="${service}">
+				<input type="text" name="descser" id="add-serdesc-txt-field" placeholder="Nom du service">
+				<input type="text" name="prixser" id="add-serprix-txt-field" placeholder="Prix du service">
+				<input type="file" name="img" id="add-img-file" accept="image/png, image/jpeg">
+				<input type="text" name="namecat" id="cat-name" style="display:none">
+				<input type="submit" id="add-ser-submit">
+				<input type="button" id="annuler-but" th:onclick="annulerr()" value="Annuler">
+			</form>
+		</div>	
+		
+		<div id="edit-form-div" style="display:none;">
+			<form action="/admin/editcat" id="editcatform" method="GET">
+				<label for="cat" id="catlab"> Choisir la catégorie a modifier: </label>
+				<select id="cat" name="catname">
+				</select>
+				<input type="text" name="newname" id="rename-txt-field" placeholder="Nouveau nom si renommer">
+				<div id="rename-div">
+					<input type="checkbox" name="ree" id="rename-checkbox" value="Renommer" th:onclick= "check(this)" checked>
+					<label for="rename-checkbox"  id="rename-label">Renommer</label>
+				</div>
+				<div id="remove-div">
+					<input type="checkbox" name="ree" id="remove-checkbox" value="Supprimer" th:onclick= "check(this)">
+					<label for="remove-checkbox"  id="remove-label">Supprimer</label>
+				</div>
+				
+				<input type="submit" id="envoyer">
+				<input type="button" id="annuler" th:value="Annuler" th:onclick="annulerr()">
+			</form>
+		</div>
+		<div id="add-form-div">
+			<form action="/admin/submitcat" id="catform" method="get">
+				<input type="text" name="catname" id="inputcat" placeholder="Nom de catégorie">
+				<input type="submit" id="subit">
+				<input type="button" id="annulerb" th:onclick="annuler()" th:value="Annuler">
+			</form>
+		</div>
+	</div>
+	<div id="espace2"></div>
+	</div>
+	<footer>
+		<div id="contact">
+			<h3>Nous Contacter</h3>
+			<ul id="liste-de-contacte">
+				<li><a href = "mailto:services.adm.marseille@gmail.com">services.adm.marseille@gmail.com</a></li>
+				<li><p>14, rue du 141ème Ria 13003 Marseille</p></li>
+				<li><p>04 84 26 21 78</p></li>
+				<li><p>06 634 648 658</p></li>
+			</ul>
+		
+		</div>
+		<div id="horaire">
+			<h3>Nos horaires d'ouverture</h3>
+			<ul id="liste-d'horaires">
+				<li><p>du dimanche au vandredi</p></li>
+			</ul>
+		</div>
+	</footer>
+		
+		
+		
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" ></script>
+    
+  	
+  	<script th:src="@{/javascript/admin.js}" ></script>
+</body>

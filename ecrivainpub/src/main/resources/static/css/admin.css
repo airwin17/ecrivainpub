@@ -1,0 +1,353 @@
+#barre {
+    text-align: center;
+    background-color: #17A589;
+    display: grid;
+    user-select:none;
+    align-items: center;
+}
+body{
+    margin: 0px;
+    font-family: sans-serif;
+    font-weight: 600;
+    display:grid;
+    
+}
+
+footer{
+	flex-shrink:0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    justify-items: center;
+}
+.elem{
+	padding: 8px;
+}
+.plus-div{
+	height:100%;
+}
+#plus{
+	position: relative;
+    top: calc(50% - 10px);
+}
+#edit{
+	position: relative;
+    top: calc(50% - 10px);
+}
+#bs-div {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+div#edit-form-div {
+    background-color: white;
+    width: 30%;
+    margin: auto;
+    height: 200px;
+    top: 30%;
+    position: relative;
+}
+select#cat {
+    grid-column: 1/5;
+    margin: auto;
+    width: 70%;
+    height: 60%;
+}
+#add-form-div{
+    top: 30%;
+    position: relative;
+    text-align: center;
+    background-color: white;
+    width: 30%;
+    height: 25%;
+    margin: auto;
+	
+	}
+	
+#catform{
+    display: grid;
+    grid-template-columns: repeat(4,15%);
+    justify-items: center;
+    grid-template-rows: 40% 40%;
+    justify-content: center;
+    height: 100%;
+    top: auto;
+    align-items: center;
+    align-content: center;
+    
+	
+}
+label#catlab {
+    font-size: 14px;
+    width: 100%;
+    grid-row: 1;
+    margin: auto;
+    text-align: center;
+    grid-column: 1/5;
+    user-select:none;
+}
+#rename-txt-field{
+	grid-column: 1/5;
+    margin: auto;
+    width: 60%;
+}
+
+form#editcatform {
+    height: 100%;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+#subit{
+    padding: 5px;
+    width: 80%;
+    height: 60%;
+    background-color: #17A589;
+    font-family: sans-serif;
+    font-weight: 600;
+    border: 0px;
+    grid-row: 2;
+    grid-column: 1/3;
+}
+#inputcat{
+    padding: 5px;
+    /* width: 45%; */
+    text-align: center;
+    grid-column: 1/5;
+    grid-row: 1;
+    width: 80%;
+    user-select:none;
+}
+.edit-div{
+	height:100%;
+}
+input#envoyer {
+    width: 80%;
+    height: 90%;
+    border: 0px;
+    background-color: #17A589;
+    margin:auto;
+    grid-column: 1/3;
+}
+#annulerb{
+	
+	background-color: #ffff00;
+    padding: 5px;
+    width: 80%;
+    height: 60%;
+
+    font-family: sans-serif;
+    font-weight: 600;
+    border: 0px;
+    grid-row: 2;
+    grid-column: 3/5;
+}
+label#remove-label {
+    font-size: 13px;
+    user-select:none;
+}
+.service-div {
+    background-color: white;
+    height: 200px;
+    width: 30%;
+    margin: auto;
+    position: relative;
+    top: 30%;
+}
+hr#horiz-line {
+    position: relative;
+    bottom: 0px;
+    width: 90%;
+    grid-row: 2;
+    grid-column: 1/21;
+}
+input#annuler {
+    width: 80%;
+    height: 90%;
+    border: 0px;
+    background-color:#ffff00;
+    margin:auto;
+    grid-column: 3/5;
+}
+div#rename-div {
+    grid-column: 1/3;
+}
+
+div#remove-div {
+    grid-column: 3/5;
+}
+
+label#rename-label {
+    font-size: 13px;
+    user-select:none;
+}
+form#addserform {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    height: 100%;
+}
+
+input#add-serdesc-txt-field {
+    grid-column: 1/3;
+    grid-row: 1/2;
+    width: 60%;
+    margin: auto;
+}
+
+input#add-serprix-txt-field {
+    grid-column: 1/3;
+    grid-row: 2/3;
+    width: 60%;
+    margin: auto;
+}
+
+input#add-img-file {
+    grid-column: 1/3;
+    grid-row: 3/4;
+    width: 60%;
+    margin: auto;
+}
+
+input#add-ser-submit {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    margin: auto;
+    border: 0px;
+    background-color: #17A589;
+    height: 70%;
+    width: 80%;
+}
+
+input#annuler-but {
+    grid-column: 2/3;
+    /* grid-row: 4/5; */
+    margin: auto;
+    border: 0px;
+    background-color: #ffff00;
+    height: 70%;
+    width: 80%;
+}
+div#tools-barre {
+    /* top: 150px; */
+    /* position: relative; */
+    height: 50px;
+    display: grid;
+    grid-template-columns: 85% 1fr 1fr;
+    grid-template-rows: 10fr 3fr;
+}
+
+button#add-service-but {
+    grid-column: 2;
+    grid-row: 1/2;
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    border: 0px;
+    background-color: #17A589;
+}
+div#result-show {
+    background-color: #fff991;
+    padding: 10px;
+    width: 95%;
+    flex-wrap: wrap;
+    height: auto;
+    margin: auto;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+}
+div.service-show {
+    padding: 3px;
+    height: 250px;
+    width: 300px;
+    box-shadow: 3px 3px 4px rgb(0 0 0 / 40%);
+    background-color: white;
+    display: grid;
+    overflow: hidden;
+    border-radius: 2%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 70% 20% 10%;
+}
+.image {
+    height: 100%;
+    width: 100%;
+    grid-column: 1/3;
+}
+
+.prix {
+    text-align: right;
+    margin: 0;
+    margin-top: 3px;
+    margin-right: 20px;
+    font-size: small;
+    grid-column: 2/3;
+}
+.txt {
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 20px;
+    text-align: left;
+    grid-column: 1/3;
+    font-size: medium;
+}
+form#editserform {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+input#edit-idser-txtfield {
+    display: none;
+}
+
+input#edit-serdesc-txt-field {
+   
+    width: 80%;
+    margin: auto;
+    grid-column: 1/3;
+}
+
+input#edit-serprix-txt-field {
+    width: 80%;
+    margin: auto;
+    grid-column: 1/3;
+}
+#espace ,#espace2{
+	height: 150px;
+}
+
+div#edit-ser-div {
+    margin: auto;
+}
+
+div#remove-ser-div {
+    margin: auto;
+}
+
+input#edit-ser-submit {
+    grid-column: 1/2;
+    margin: auto;
+    border: 0px;
+    background-color: #17A589;
+    height: 70%;
+    width: 80%;
+}
+h1 {
+    text-align: center;
+}
+
+div#bienvenue {
+    box-shadow: 3px 3px 3px 1px;
+    width: 60%;
+    background-color: #76D7C4;
+    border-radius: 5px;
+    margin: auto;
+}

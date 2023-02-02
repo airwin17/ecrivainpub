@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>écrivain public</title>
+    <link rel="stylesheet" th:href="@{/css/client.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+</head>
+<body>
+	
+	<div id="contenu">
+	<div id="barre">
+		<div th:each="categorie: ${categ}" class="elem" th:text="${categorie.catname}" onclick="hundlercat(this)"></div>
+	</div>
+	
+	<div id="espace"><div id="menu" onclick="showmenu()"><i class="fa-solid fa-bars"></i></div></div>
+	<div id="tools-barre" style="display:none;">
+	<p id="txtpr">nos services:</p>
+		<hr id="horiz-line">
+	</div>
+	
+	<div id="result-show" style="display:none;">
+		
+	</div>
+	<div id="bs-div" style="display:none;">
+		<div id="menu-re">
+		<i class="fa fa-times" aria-hidden="true" onclick="closee()"></i>
+		<div th:each="categorie: ${categ}" class="eleme" th:text="${categorie.catname}" onclick="navto(this)">
+		</div>
+		
+	</div>
+	</div>
+	<div id="bienvenue"><h1>Votre plateforme de conseils administratifs et aide aux dossiers divers !<br>
+
+<span >Nous facilitons les tâches bureautiques diverses : traduction, saisies de documents, reconstruction de dossiers et inscription internet multiples…..<br>
+
+Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
+	
+	<div id="espace2"></div>
+	</div>
+	<footer>
+		<div id="contact">
+			<h3>Nous Contacter</h3>
+			<ul id="liste-de-contacte">
+				<li><a href = "mailto:services.adm.marseille@gmail.com">services.adm.marseille@gmail.com</a></li>
+				<li><p>14, rue du 141ème Ria 13003 Marseille</p></li>
+				<li><p>04 84 26 21 78</p></li>
+				<li><p>06 634 648 658</p></li>
+			</ul>
+		
+		</div>
+		<div id="horaire">
+			<h3>Nos horaires d'ouverture</h3>
+			<ul id="liste-d'horaires">
+				<li><p>du dimanche au vandredi</p></li>
+			</ul>
+		</div>
+	</footer>
+		
+		
+		
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" ></script>
+    
+  	
+  	<script th:src="@{/javascript/client.js}" ></script>
+</body>

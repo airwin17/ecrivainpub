@@ -1,0 +1,235 @@
+#barre {
+    text-align: center;
+    grid-column: 1/4;
+    background-color: #17A589;
+    display: flex;
+    user-select:none;
+    /* flex: 1; */
+    align-items: center;
+}
+.eleme {
+    padding: 15px;
+    font-size: 25px;
+    text-align: center;
+}
+
+i.fa.fa-times {
+    /* text-align: end; */
+    margin: auto;
+    font-size: 40px;
+    padding: 10px;
+}
+i.fa-solid.fa-bars {
+    height:50px;
+    width:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    
+}
+#bs-div {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+ #menu{
+    display:none; 
+    }
+div#contenu {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    }
+
+@media (max-width:1024px){
+     div#contenu{
+        grid-template-columns: 1fr 4fr 1fr;
+    }
+}
+@media (max-width:768px){
+    div#contenu{
+        grid-template-columns: 1fr 8fr 1fr;
+    }
+    footer{
+        grid-template-rows: 1fr 1fr;
+        /* grid-template-columns: 1fr 4fr 1fr; */
+    }
+	div#horaire{
+	grid-row: 2/3;
+	grid-column: 1/3;
+	padding-left: 40px;
+	}
+	#contact{
+		grid-column: 1/3;
+		text-align: start;
+		padding-left: 40px;
+		/* font-size: 12px; */
+	}
+	h1{
+		font-size:30px;
+	}
+	
+}
+
+@media (max-width:425px){
+    #barre{
+     display:none;
+    }
+    #menu{
+    display:block;
+    }
+    div#contenu{
+        grid-template-columns: 1fr 20fr 1fr;
+    }
+	h1{
+		font-size:25px;
+	}
+}
+@media (max-width:375px){
+	div#horaire{
+		font-size: 12px;
+	}
+	#contact{
+		font-size: 12px;
+	}
+	h1{
+		font-size:20px;
+	}
+}
+
+body{
+    margin: 0px;
+    font-family: sans-serif;
+    font-weight: 600;
+    display:grid;
+}
+div#menu-re {
+    background-color: #17A589;
+    /* padding-right: 50px; */
+    text-align: end;
+}
+footer{
+	background-color: #17A589;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	/* justify-items: center; */
+}
+.elem{
+	padding: 8px;
+	flex: 1;
+}
+
+
+.service-div {
+    background-color: white;
+    height: 200px;
+    width: 30%;
+    margin: auto;
+    position: relative;
+    top: 30%;
+}
+hr#horiz-line {
+    position: relative;
+    /* bottom: 0px; */
+    font-size: 50px;
+    width: 90%;
+    /* border: 1px; */
+    grid-row: 2;
+    grid-column: 1/4;
+}
+input#add-img-file {
+    grid-column: 1/3;
+    grid-row: 3/4;
+    width: 60%;
+    margin: auto;
+}
+div#tools-barre {
+    /* top: 150px; */
+    /* position: relative; */
+    /* height: 50px; */
+    grid-column: 1/4;
+    /* grid-row: 3/4; */
+    display: grid;
+    grid-template-columns: 85% 1fr 1fr;
+    /* grid-template-rows: 10fr 3fr; */
+}
+
+
+div#result-show {
+    background-color: #fff991;
+    padding: 10px;
+    width: 95%;
+    height: auto;
+    grid-column: 1/4;
+    width: 80%;
+    margin: auto;
+    gap: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+div.service-show {
+    padding: 3px;
+    height: 250px;
+    width: 300px;
+    box-shadow: 3px 3px 4px rgb(0 0 0 / 40%);
+    background-color: white;
+    display: grid;
+    overflow: hidden;
+    border-radius: 2%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 70% 20% 10%;
+}
+.image {
+    height: 100%;
+    width: 100%;
+    grid-column: 1/3;
+}
+
+.prix {
+    text-align: right;
+    margin: 0;
+    margin-top: 3px;
+    margin-right: 20px;
+    font-size: small;
+    grid-column: 2/3;
+}
+#contact{
+	padding-left: 50px
+}
+.txt {
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 20px;
+    text-align: left;
+    grid-column: 1/3;
+    font-size: medium;
+}
+#txtpr{
+	font-size:25px;
+	padding-left: 20px;
+}
+input#edit-serprix-txt-field {
+    width: 80%;
+    margin: auto;
+    grid-column: 1/3;
+}
+#espace ,#espace2{
+	height: 150px;
+	grid-column: 1/4;
+}
+h1 {
+    text-align: center;
+}
+
+div#bienvenue {
+    box-shadow: 3px 3px 3px 1px;
+    background-color: #76D7C4;
+    border-radius: 5px;
+    grid-column: 2/3;
+    justify-content: center;
+}

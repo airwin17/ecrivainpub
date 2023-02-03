@@ -38,7 +38,7 @@ public class ControlAdmin {
 	String username=Data.databaseUsername;
 	String password=Data.databasePassword;
 	String databaseUrl=Data.databaseUrl;
-	
+	String dbname="servicemarseille";
 	
 
 	@GetMapping("/admin")
@@ -47,7 +47,7 @@ public class ControlAdmin {
 		var cat =new LinkedList<Categorie>();
 		Connection con=DriverManager.getConnection(databaseUrl,username,password);
 		var st=con.createStatement();
-		st.addBatch("use servicemarseille");
+		st.addBatch("use "+dbname);
 		st.executeBatch();
 		var rs=st.executeQuery("select * from categorie");
 		while (rs.next()) { 
@@ -65,7 +65,7 @@ public class ControlAdmin {
 		Connection con=DriverManager.getConnection(databaseUrl,username,password);
 		var st=con.createStatement();
 		if(str.length()>0&&str.charAt(0)!=' ') {
-			st.addBatch("use servicemarseille");
+			st.addBatch("use "+dbname);
 			st.addBatch("insert into categorie(namecat) values('"+str+"');");
 			st.executeBatch();
 		}
@@ -81,7 +81,7 @@ public class ControlAdmin {
 		
 		Connection con=DriverManager.getConnection(databaseUrl,username,password);
 		var st=con.createStatement();
-		st.addBatch("use servicemarseille");
+		st.addBatch("use "+dbname);
 		st.executeBatch();
 		var rs=st.executeQuery("select * from services where namecat='"+str+"';");
 		while(rs.next()) {
@@ -108,13 +108,13 @@ public class ControlAdmin {
 		System.out.println(ree);
 		if(ree.equals("Supprimer")) {
 			System.out.println(4);
-			st.addBatch("use servicemarseille");
+			st.addBatch("use "+dbname);
 			st.addBatch("delete from services where namecat='"+catname+"'");
 			st.addBatch("delete from categorie where namecat='"+catname+"'");
 			
 		}else if(ree.equals("Renommer")&& ree.length()>0) {
 			System.out.println(5);
-			st.addBatch("use servicemarseille");
+			st.addBatch("use "+dbname);
 			st.addBatch("UPDATE categorie set namecat='"+newname+"' where namecat='"+catname+"';");
 			
 		}
@@ -123,20 +123,20 @@ public class ControlAdmin {
 		
 	}
 	
-@PostMapping(value="/admin/addservice", consumes= {MediaType.MULTIPART_FORM_DATA_VALUE})
-public ResponseEntity<String> addservice(@ModelAttribute Service service,@RequestPart MultipartFile img) throws SQLException, IOException {
+@PostMapping("/admin/addservice")
+public ResponseEntity<String> addservice(@RequestBody Service service) throws SQLException, IOException {
 	
 	
 	
-	service.img=img;
+	
 	if (service.prixser.equals("")==false&&service.namecat.equals("")==false&&service.descser.equals("")==false) {
 		Connection con = DriverManager.getConnection(databaseUrl, username, password);
-		String query = "insert into servicemarseille.services(namecat,descser,prixser,image) values(?,?,?,?)";
+		String query = "insert into "+dbname+".services(namecat,descser,prixser,image) values(?,?,?,?)";
 		var st = con.prepareStatement(query);
 		st.setString(1, service.namecat);
 		st.setString(2, service.descser);
 		st.setString(3, service.prixser);
-		st.setBlob(4, service.img.getInputStream());
+		st.setBlob(4, new ByteArrayInputStream(service.image));
 		
 		st.execute();
 	}
@@ -150,7 +150,7 @@ public ResponseEntity<String> editservice(@RequestBody Service service,@RequestP
 		Connection con = DriverManager.getConnection(databaseUrl, username, password);
 		if(action.equals("Modifier")) {
 			if(service.image!=null) {
-				var st=con.prepareStatement("update servicemarseille.services set descser=?, prixser=? ,image=? where idser=?;");
+				var st=con.prepareStatement("update "+dbname+".services set descser=?, prixser=? ,image=? where idser=?;");
 				st.setString(1, service.descser);
 				st.setString(2, service.prixser);
 				st.setBlob(3 ,new ByteArrayInputStream(service.image));
@@ -158,14 +158,14 @@ public ResponseEntity<String> editservice(@RequestBody Service service,@RequestP
 				st.execute();
 			
 			}else {
-					var st=con.prepareStatement("update servicemarseille.services set descser=?, prixser=? where idser=?;");
+					var st=con.prepareStatement("update "+dbname+".services set descser=?, prixser=? where idser=?;");
 					st.setString(1, service.descser);
 					st.setString(2, service.prixser);
 					st.setString(3, service.idser);
 					st.execute();
 				}
 			}else if(action.equals("Supprimer")) {
-				var st=con.prepareStatement("delete from servicemarseille.services where idser=?");
+				var st=con.prepareStatement("delete from "+dbname+".services where idser=?");
 				st.setString(1, service.idser);
 				st.execute();
 		}

@@ -104,12 +104,23 @@ function annulerr(){
 	$("#service-add-div").css("display","none");
 	$(".edit-div").css("background-color",barrecolor);
 }
-$("#addserform").on("submit",function (e) {
+$("#addserform").on("submit",async function (e) {
   e.preventDefault();
   
- 
-  var ser=new FormData(document.querySelector("#addserform"));
-  fetch(server+"/addservice",{method:'POST',body:ser}).then(()=>{
+ var imm;
+	if(document.querySelector("#addd-img-file").files[0]!=null){
+		imm=await getBase64(document.querySelector("#addd-img-file").files[0]);
+	}
+  var ser={
+		namecat:selectedcat,
+		//idser:$("#add-idser-txtfield").val(),
+		descser:$("#add-serdesc-txt-field").val(),
+		prixser:$("#add-serprix-txt-field").val(),
+		image:imm
+	};
+  
+  
+  fetch(server+"/addservice",{method:'POST',headers:{'Content-Type': 'application/json'},body:JSON.stringify(ser)}).then(()=>{
 	refresh();
 	annulerr();
   });

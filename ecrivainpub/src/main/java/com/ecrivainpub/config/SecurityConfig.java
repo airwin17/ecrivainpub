@@ -17,16 +17,19 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests()
-		.requestMatchers("/admin/**")
-		.hasRole("ADMIN")
-		.and()
-		.authorizeHttpRequests()
+//		.requestMatchers("/admin/**")
+//		.hasRole("ADMIN")
+//		.and()
+//		.authorizeHttpRequests()
 		.requestMatchers("/**")
 		.permitAll();
 		http.httpBasic();
+		http.csrf().disable();
 		return http.build();
 		
 	}
+	
+	
 	@Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()

@@ -61,7 +61,7 @@ Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
 			<form action="/admin/addservice" id="addserform" method="get" th:object="${service}">
 				<input type="text" name="descser" id="add-serdesc-txt-field" placeholder="Nom du service">
 				<input type="text" name="prixser" id="add-serprix-txt-field" placeholder="Prix du service">
-				<input type="file" name="img" id="add-img-file" accept="image/png, image/jpeg">
+				<input type="file" name="img" class="add-img-file"id="addd-img-file" accept="image/png, image/jpeg">
 				<input type="text" name="namecat" id="cat-name" style="display:none">
 				<input type="submit" id="add-ser-submit">
 				<input type="button" id="annuler-but" th:onclick="annulerr()" value="Annuler">

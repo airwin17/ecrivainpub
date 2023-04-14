@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mysql.cj.jdbc.Blob;
+
 
 import model.Categorie;
 import model.Data;
@@ -35,17 +35,15 @@ import model.Service;
 @Controller
 public class ControlAdmin {
 	
-	String username=Data.databaseUsername;
-	String password=Data.databasePassword;
-	String databaseUrl=Data.databaseUrl;
-	String dbname="servicemarseille";
 	
+	String dbname="servicemarseille";
+	String url="jdbc:mysql:///"+dbname+"?cloudSqlInstance="+Data.cloudSqlInstancename+"&socketFactory="+Data.socketFactory+"&user="+Data.databaseUsername+"&password="+Data.databasePassword;
 
 	@GetMapping("/admin")
 	public String adminview(Model model) throws SQLException {
 		List<Categorie> cats=new ArrayList<>();
 		var cat =new LinkedList<Categorie>();
-		Connection con=DriverManager.getConnection(databaseUrl,username,password);
+		Connection con=DriverManager.getConnection(url);
 		var st=con.createStatement();
 		st.addBatch("use "+dbname);
 		st.executeBatch();
@@ -62,7 +60,7 @@ public class ControlAdmin {
 	
 	public String addcat(@RequestParam("catname") String str) throws SQLException{
 		
-		Connection con=DriverManager.getConnection(databaseUrl,username,password);
+		Connection con=DriverManager.getConnection(url);
 		var st=con.createStatement();
 		if(str.length()>0&&str.charAt(0)!=' ') {
 			st.addBatch("use "+dbname);
@@ -79,7 +77,7 @@ public class ControlAdmin {
 	public ResponseEntity<List<Service>> loadforadmin(@RequestParam("categorie") String str) throws SQLException, IOException {
 		var ser=new LinkedList<Service>();
 		
-		Connection con=DriverManager.getConnection(databaseUrl,username,password);
+		Connection con=DriverManager.getConnection(url);
 		var st=con.createStatement();
 		st.addBatch("use "+dbname);
 		st.executeBatch();
@@ -101,7 +99,8 @@ public class ControlAdmin {
 	}
 	@GetMapping("/admin/editcat")
 	public String adminedit(@RequestParam("catname") String catname,@RequestParam("newname") String newname,@RequestParam("ree") String ree) throws SQLException {
-		Connection con=DriverManager.getConnection(databaseUrl,username,password);
+		Connection con=DriverManager.getConnection(url);
+		
 		var st=con.createStatement();
 		System.out.println(catname);
 		System.out.println(newname);
@@ -130,7 +129,7 @@ public ResponseEntity<String> addservice(@RequestBody Service service) throws SQ
 	
 	
 	if (service.prixser.equals("")==false&&service.namecat.equals("")==false&&service.descser.equals("")==false) {
-		Connection con = DriverManager.getConnection(databaseUrl, username, password);
+		Connection con = DriverManager.getConnection(url);
 		String query = "insert into "+dbname+".services(namecat,descser,prixser,image) values(?,?,?,?)";
 		var st = con.prepareStatement(query);
 		st.setString(1, service.namecat);
@@ -147,7 +146,7 @@ public ResponseEntity<String> editservice(@RequestBody Service service,@RequestP
 	
 
 	if(service.prixser.equals("")==false&&service.namecat.equals("")==false&&service.descser.equals("")==false) {
-		Connection con = DriverManager.getConnection(databaseUrl, username, password);
+		Connection con = DriverManager.getConnection(url);
 		if(action.equals("Modifier")) {
 			if(service.image!=null) {
 				var st=con.prepareStatement("update "+dbname+".services set descser=?, prixser=? ,image=? where idser=?;");

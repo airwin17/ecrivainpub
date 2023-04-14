@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -11,22 +11,38 @@
 	
 	<groupId>com.ecrivainpub</groupId>
 	<artifactId>ecrivain-public</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<name>ecrivain-public</name>
 	<description>site pour boubeker karima ecrivain public</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
+	
+	
 	<dependencies>
+	
 <dependency>
     <groupId>org.projectlombok</groupId>
     <artifactId>lombok</artifactId>
     
 </dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 <dependency>
     <groupId>mysql</groupId>
     <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.32</version>
 </dependency>
+
+<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-spanner-jdbc -->
+<dependency>
+    <groupId>com.google.cloud.sql</groupId>
+    <artifactId>mysql-socket-factory-connector-j-8</artifactId>
+    <version>1.9.0</version>
+</dependency>
+
+
 
     
 	

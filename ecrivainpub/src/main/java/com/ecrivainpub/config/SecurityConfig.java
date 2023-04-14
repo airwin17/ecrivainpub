@@ -1,7 +1,14 @@
 package com.ecrivainpub.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,17 +17,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import model.Data;
+import com.ecrivainpub.model.Data;
 @Configuration
 @EnableWebSecurity
+@PropertySource("application.properties")
 public class SecurityConfig {
 	@Bean
-	public SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilter(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests()
-//		.requestMatchers("/admin/**")
-//		.hasRole("ADMIN")
-//		.and()
-//		.authorizeHttpRequests()
+		.requestMatchers("/admin/**")
+		.hasRole("ADMIN")
+		.and()
+		.authorizeHttpRequests()
 		.requestMatchers("/**")
 		.permitAll();
 		http.httpBasic();
@@ -29,14 +37,14 @@ public class SecurityConfig {
 		
 	}
 	
-	
 	@Bean
-    public InMemoryUserDetailsManager userDetailsService() {
+    InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.withDefaultPasswordEncoder()
-            .username(Data.databaseUsername)
-            .password(Data.databasePassword)
+            .username("root")
+            .password("nonono")
             .roles("ADMIN")
             .build();
         return new InMemoryUserDetailsManager(user);
     }
+	
 }

@@ -4,26 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>écrivain public</title>
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
     <link rel="stylesheet" th:href="@{/css/admin.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    
-    
-  	
 </head>
 <body>
-	
-	<div id="contenu">
-	<div id="barre">
+	<!--style="background: linear-gradient(to bottom, transparent, white),url(${wallpaper});"-->
+	<div id="contenu" >
+	<nav id="barre">
 		<div th:each="categorie: ${categ}" class="elem" th:text="${categorie.catname}" onclick="hundlercat(this)" ></div>
 		<div class="plus-div" onclick="adcat(this)" >
 			<i class="fa-solid fa-plus" id="plus" ></i>
 		</div>
 		<div class="edit-div" onclick="editcat(this)"><i class="fa fa-pencil" aria-hidden="true" id="edit"></i></div>
+	</nav>
+	<div id="espace" class="space" >
+		
 	</div>
-	<div id="espace" ></div>
 	<div id="tools-barre" style="display:none;">
 		<button id="add-service-but" th:onclick="addservice()">
-			<i class="fa-solid fa-plus" id="plus-service" ></i>
+			<i class="fa-solid fa-plus" id="plus-service"></i>
 		</button>
 		<hr id="horiz-line">
 	</div>
@@ -38,6 +38,7 @@
 
 Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
 	<div id="bs-div" style="display:none;">
+		
 		<div id="edit-service-div" class="service-div" style="display:none;">
 			<form id="editserform" method="get">
 				<input type="text" name="idser" id="edit-idser-txtfield">
@@ -66,7 +67,7 @@ Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
 				<input type="submit" id="add-ser-submit">
 				<input type="button" id="annuler-but" th:onclick="annulerr()" value="Annuler">
 			</form>
-		</div>	
+		</div>
 		
 		<div id="edit-form-div" style="display:none;">
 			<form action="/admin/editcat" id="editcatform" method="GET">
@@ -95,7 +96,7 @@ Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
 			</form>
 		</div>
 	</div>
-	<div id="espace2"></div>
+	<div id="espace2" class="space"></div>
 	</div>
 	<footer>
 		<div id="contact">
@@ -111,16 +112,11 @@ Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
 		<div id="horaire">
 			<h3>Nos horaires d'ouverture</h3>
 			<ul id="liste-d'horaires">
-				<li><p>du dimanche au vandredi</p></li>
+				<li><p>du dimanche au vandredi:<br>8h à 12h - 14h à 18h</p></li>
+				<li><p>samedi:<br>10h à 12h </p></li>
 			</ul>
 		</div>
 	</footer>
-		
-		
-		
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" ></script>
-    
   	
   	<script th:src="@{/javascript/admin.js}" ></script>
 </body>

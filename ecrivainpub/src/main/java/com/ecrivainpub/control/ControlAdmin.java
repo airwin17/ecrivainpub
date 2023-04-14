@@ -1,174 +1,106 @@
 package com.ecrivainpub.control;
 
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-
-
-import model.Categorie;
-import model.Data;
-import model.Service;
+import com.ecrivainpub.model.Categorie;
+import com.ecrivainpub.model.ServiceItem;
+import com.ecrivainpub.services.CategorieService;
+import com.ecrivainpub.services.ServiceService;
 
 @Controller
 public class ControlAdmin {
-	
-	
-	String dbname="servicemarseille";
-	String url="jdbc:mysql:///"+dbname+"?cloudSqlInstance="+Data.cloudSqlInstancename+"&socketFactory="+Data.socketFactory+"&user="+Data.databaseUsername+"&password="+Data.databasePassword;
-
+	@Autowired
+	private CategorieService categorieService;
+	@Autowired
+	private ServiceService sservice;
 	@GetMapping("/admin")
 	public String adminview(Model model) throws SQLException {
-		List<Categorie> cats=new ArrayList<>();
-		var cat =new LinkedList<Categorie>();
-		Connection con=DriverManager.getConnection(url);
-		var st=con.createStatement();
-		st.addBatch("use "+dbname);
-		st.executeBatch();
-		var rs=st.executeQuery("select * from categorie");
-		while (rs.next()) { 
-			cat.add(new Categorie(rs.getString("namecat")));
-		}
-		model.addAttribute("categ", cat);
-		
+		model.addAttribute("categ", categorieService.findAll());
 		return "admin";
 		
 	}
 	@GetMapping("/admin/submitcat")
-	
 	public String addcat(@RequestParam("catname") String str) throws SQLException{
-		
-		Connection con=DriverManager.getConnection(url);
-		var st=con.createStatement();
-		if(str.length()>0&&str.charAt(0)!=' ') {
-			st.addBatch("use "+dbname);
-			st.addBatch("insert into categorie(namecat) values('"+str+"');");
-			st.executeBatch();
-		}
-		
+		Categorie categ=new Categorie(str);
+		categorieService.save(categ);
 		return "redirect:/admin"; 
 		
 		
 	}
 	@GetMapping("/admin/categorie")
 	@ResponseBody
-	public ResponseEntity<List<Service>> loadforadmin(@RequestParam("categorie") String str) throws SQLException, IOException {
-		var ser=new LinkedList<Service>();
-		
-		Connection con=DriverManager.getConnection(url);
-		var st=con.createStatement();
-		st.addBatch("use "+dbname);
-		st.executeBatch();
-		var rs=st.executeQuery("select * from services where namecat='"+str+"';");
-		while(rs.next()) {
-			//Blob blob=;
-			Service serv=new Service(str,rs.getString("descser"),rs.getString("prixser"));
-			serv.image=rs.getBlob("image").getBinaryStream().readAllBytes();
-			serv.idser=rs.getString("idser");
-			ser.add(serv);
+	public ResponseEntity<List<ServiceItem>> loadforadmin(@RequestParam("categorie") String str) throws SQLException {
+		var ser=sservice.findAll();
+		var mat=new LinkedList<ServiceItem>();
+		for(int i=0;i<ser.size();i++) {
+			if(ser.get(i).getNamecat().equals(str)==true) {
+				mat.add(ser.get(i));
+			}
 		}
-		if(ser.size()>0) {
-			
-			return new ResponseEntity<List<Service>>(ser,HttpStatus.OK);
+		if(mat.size()>0) {
+			return new ResponseEntity<List<ServiceItem>>(mat,HttpStatus.OK);
 		}else {
-			
-			return new ResponseEntity<List<Service>>(ser,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<ServiceItem>>(mat,HttpStatus.NOT_FOUND);
 		}
 	}
 	@GetMapping("/admin/editcat")
-	public String adminedit(@RequestParam("catname") String catname,@RequestParam("newname") String newname,@RequestParam("ree") String ree) throws SQLException {
-		Connection con=DriverManager.getConnection(url);
-		
-		var st=con.createStatement();
-		System.out.println(catname);
-		System.out.println(newname);
-		System.out.println(ree);
+	public String adminedit(
+			@RequestParam("catname") String catname,
+			@RequestParam("newname") String newname,
+			@RequestParam("ree") String ree
+			) {
 		if(ree.equals("Supprimer")) {
-			System.out.println(4);
-			st.addBatch("use "+dbname);
-			st.addBatch("delete from services where namecat='"+catname+"'");
-			st.addBatch("delete from categorie where namecat='"+catname+"'");
-			
-		}else if(ree.equals("Renommer")&& ree.length()>0) {
-			System.out.println(5);
-			st.addBatch("use "+dbname);
-			st.addBatch("UPDATE categorie set namecat='"+newname+"' where namecat='"+catname+"';");
-			
-		}
-		st.executeBatch();
+			var serlist=sservice.findAll();
+			var todelete=new LinkedList<ServiceItem>();
+			for(int i=0;i<serlist.size();i++) {
+				if(serlist.get(i).equals(catname)) {
+					todelete.add(serlist.get(i));
+				}
+			}
+			for(int i=0;i<todelete.size();i++) {
+				sservice.deleteById(todelete.get(i).getIdser());
+			}
+			categorieService.deleteById(catname);
+		}else
+			categorieService.findById(catname).get().setCatname(newname);
 		return "redirect:/admin";
 		
-	}
+}
 	
 @PostMapping("/admin/addservice")
-public ResponseEntity<String> addservice(@RequestBody Service service) throws SQLException, IOException {
-	
-	
-	
-	
-	if (service.prixser.equals("")==false&&service.namecat.equals("")==false&&service.descser.equals("")==false) {
-		Connection con = DriverManager.getConnection(url);
-		String query = "insert into "+dbname+".services(namecat,descser,prixser,image) values(?,?,?,?)";
-		var st = con.prepareStatement(query);
-		st.setString(1, service.namecat);
-		st.setString(2, service.descser);
-		st.setString(3, service.prixser);
-		st.setBlob(4, new ByteArrayInputStream(service.image));
-		
-		st.execute();
-	}
+public ResponseEntity<String> addservice(@RequestBody ServiceItem service) throws SQLException {
+	sservice.seve(service);
 	return new ResponseEntity<String>("succes", HttpStatus.OK);
 }
 @PostMapping(value="/admin/editservice")
-public ResponseEntity<String> editservice(@RequestBody Service service,@RequestParam("action") String action) throws SQLException, IOException{
-	
-
-	if(service.prixser.equals("")==false&&service.namecat.equals("")==false&&service.descser.equals("")==false) {
-		Connection con = DriverManager.getConnection(url);
+public ResponseEntity<String> editservice(
+		@RequestBody ServiceItem service,
+		@RequestParam("action") String action
+		) {
 		if(action.equals("Modifier")) {
-			if(service.image!=null) {
-				var st=con.prepareStatement("update "+dbname+".services set descser=?, prixser=? ,image=? where idser=?;");
-				st.setString(1, service.descser);
-				st.setString(2, service.prixser);
-				st.setBlob(3 ,new ByteArrayInputStream(service.image));
-				st.setString(4, service.idser);
-				st.execute();
-			
-			}else {
-					var st=con.prepareStatement("update "+dbname+".services set descser=?, prixser=? where idser=?;");
-					st.setString(1, service.descser);
-					st.setString(2, service.prixser);
-					st.setString(3, service.idser);
-					st.execute();
-				}
+			if(service.getImage()!=null) {
+				//sservice.updateImg(service.getIdser(), service.getDescser(), service.getPrixser(), service.getImage());
+			}else
+				sservice.updateNoImg(service.getIdser(), service.getDescser(), service.getPrixser());
 			}else if(action.equals("Supprimer")) {
-				var st=con.prepareStatement("delete from "+dbname+".services where idser=?");
-				st.setString(1, service.idser);
-				st.execute();
+				sservice.deleteById(service.getIdser());
 		}
-	}
+	
 	return new ResponseEntity<String>("succes",HttpStatus.OK);
 }
 }

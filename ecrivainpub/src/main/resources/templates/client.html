@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>écrivain public</title>
+	<link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
     <link rel="stylesheet" th:href="@{/css/client.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 <body>
 	
 	<div id="contenu">
-	<div id="barre">
+	<nav id="barre">
 		<div th:each="categorie: ${categ}" class="elem" th:text="${categorie.catname}" onclick="hundlercat(this)"></div>
-	</div>
+	</nav>
 	
 	<div id="espace"><div id="menu" onclick="showmenu()"><i class="fa-solid fa-bars"></i></div></div>
 	<div id="tools-barre" style="display:none;">
@@ -57,12 +58,5 @@ Rejoignez-nous pour bénéficier de nos services variés</span></h1></div>
 			</ul>
 		</div>
 	</footer>
-		
-		
-		
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" ></script>
-    
-  	
   	<script th:src="@{/javascript/client.js}" ></script>
 </body>

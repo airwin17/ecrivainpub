@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import model.Categorie;
-import model.Data;
-import model.Service;
+
+import com.ecrivainpub.model.*;
+import com.ecrivainpub.services.CategorieService;
+import com.ecrivainpub.services.ServiceService;
 @Controller
 public class ControlClient {
+	@Autowired
+	private CategorieService categorieService;
+	@Autowired
+	private ServiceService sservice;
 	String username=Data.databaseUsername;
 	String password=Data.databasePassword;
 	String databaseUrl=Data.databaseUrl;
@@ -31,46 +37,28 @@ public class ControlClient {
 		return "redirect:/client";
 	}
 	@GetMapping("/client")
-	public String homeview(Model model) throws SQLException {
-		List<Categorie> cats=new ArrayList<>();
-		var cat =new LinkedList<Categorie>();
-		Connection con=DriverManager.getConnection(databaseUrl,username,password);
-		var st=con.createStatement();
-		st.addBatch("use servicemarseille");
-		st.executeBatch();
-		var rs=st.executeQuery("select * from categorie");
-		while (rs.next()) { 
-			cat.add(new Categorie(rs.getString("namecat")));
-		}
-		model.addAttribute("categ", cat);
-		
+	public String homeview(Model model)  {
+		model.addAttribute("categ", categorieService.findAll());
 		return "client";
 		
 	}
 	
+	
 	@GetMapping("/client/categorie")
 	@ResponseBody
-	public ResponseEntity<List<Service>> loadforClient(@RequestParam("categorie") String str) throws SQLException, IOException {
-		var ser=new LinkedList<Service>();
+	public ResponseEntity<List<ServiceItem>> loadforClient(@RequestParam("categorie") String str) throws SQLException, IOException {
 		
-		Connection con=DriverManager.getConnection(databaseUrl,username,password);
-		var st=con.createStatement();
-		st.addBatch("use servicemarseille");
-		st.executeBatch();
-		var rs=st.executeQuery("select * from services where namecat='"+str+"';");
-		while(rs.next()) {
-			//Blob blob=;
-			Service serv=new Service(str,rs.getString("descser"),rs.getString("prixser"));
-			serv.image=rs.getBlob("image").getBinaryStream().readAllBytes();
-			serv.idser=rs.getString("idser");
-			ser.add(serv);
+		var ser=sservice.findAll();
+		var mat=new LinkedList<ServiceItem>();
+		for(int i=0;i<=ser.size()-1;i++) {
+			if(ser.get(i).getNamecat().equals(str)==true) {
+				mat.add(ser.get(i));
+			}
 		}
-		if(ser.size()>0) {
-			
-			return new ResponseEntity<List<Service>>(ser,HttpStatus.OK);
+		if(mat.size()>0) {
+			return new ResponseEntity<List<ServiceItem>>(mat,HttpStatus.OK);
 		}else {
-			
-			return new ResponseEntity<List<Service>>(ser,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<ServiceItem>>(mat,HttpStatus.NOT_FOUND);
 		}
 	}
 	

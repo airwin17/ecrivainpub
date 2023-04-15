@@ -6,9 +6,9 @@
    
    <persistence-unit name="Ecl" transaction-type="RESOURCE_LOCAL">
    <properties>
-         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/servicemarseille"/>
-         <property name="javax.persistence.jdbc.user" value="root"/>
-         <property name="javax.persistence.jdbc.password" value="nonono"/>
+         <property name="javax.persistence.jdbc.url" value="jdbc:mysql://sql972.main-hosting.eu/u780892035_servicem"/>
+         <property name="javax.persistence.jdbc.user" value="u780892035_root"/>
+         <property name="javax.persistence.jdbc.password" value="Malik2000.21.24"/>
          <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       </properties>
     </persistence-unit>
